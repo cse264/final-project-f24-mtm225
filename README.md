@@ -1,30 +1,42 @@
-# Final Project
+# Madix Marlatt - CSE 264 Final Project 
 
-## Due Last day of Class
-## First report due Monday Oct 28, 2024
+## Tools used (or tools that I planned on using)
 
-### Build a web app in a team of 4-5
+Here are the tools, dependencies, and libraries that actually are utilized in the project:
+* SvelteKit (front-end)
+* Node.js (back-end)
+* Tailwind css (formatting)
+* Auth0 (for user account creation and authentication, kind of)
+* Chart.js (library for creating pokemon stat distribution radar chart)
+* Axios (for api requests)
+* Express (theoretically is used for routing to the database, but the database is never actually used)
 
-### Requirements:
-* Must have user accounts and different user roles (like user/Admin, free/paid, etc)
-* Must use a database (you choose)
-* Must have interactive UI (of any kind)
-* Must use a library or framework not discussed/used in class
-* Must use an outside REST API in some way (Outside as in external, like the Reddit API, etc)
+Technically, the code is in place to connect to the postgreSQL database, but because i could not get Auth0 working properly, i didn't get to test if it would actually work. The routes for connecting to the database can be found in src/routes/api/pokemon-info/+server.cjs. Also, the schema.sql file can be found in the db folder on the root directory. This file was used to create the database that would be named "instadex". 
 
-* Feel free to build off other projects and frameworks. For example [https://github.com/sahat/hackathon-starter] is a great starter project that you can build on top of. 
+To set up the database, I installed postgreSQL from the official website, and then ran the following:
+psql -U postgres (you will asked for the password, which i made "pokemon123")
+CREATE DATABASE instadex
+\c instadex (changes directory to database )
+psql -U postgres -d instadex -f db/schema.sql (this creates the database based on the schema)
 
-### Instructions
-Build your team and write a document describing your application to me by Monday Oct 28, 2024. Email this document to me and the TA for this course (Xinhui Chen xic721@lehigh.edu)  I will approve your web application idea. In your paper, include:
-* the name of your application
-* Name and roles of all your team members
-* its functionality (how does it meet each of the requirements listed above - list each requirement along with your will fulfill it)
-* user story/use case (what happens when a user visits your application, what can they do, etc)
-* technical design (what is your tech stack)
+Also, you must add "C:/Program Files/PostgreSQL/17/bin" to your system path (not user path). If your version of postgreSQL is something other than 17, replace 17 with that version number.
 
+## How to run/use app
+Please read the above section before coming here. 
 
-### Final deliverable due end of the semester:
-* Codebase in Github Repo
-* README describing your project, with all the information outlined above (team members, application name, description, etc). You will also include detailed instructions of how to install and run your application, and what API keys, databases, etc are needed to run your application.
-* Final Presentation and Demo
-  * You will prepare a 5 minute presentation and demo of your application in class during the last week of classes
+First and foremost, have Node.js running on your machine.
+
+You will then need to run 'npm install' in the project folder. This will install all of the necessary dependencies.
+
+If the postgreSQL database was being used, you would need to launch the backend by running "node src/routes/api/pokemon-info/+server.cjs". This is not necessary in reality though, because of Auth0 not fully working.
+
+So, you only need to run 'npm run dev' and it will either open the website automatically, or you can ctrl-click into the website. The website SHOULD be localhost:5173.
+
+There, you can search for any pokemon or ability, as well as display a type chart. Refer to the Auth0 section below for information about it and the log in button on the top of the page.
+
+After logging in, you are supposed to be able to enter information about the pokemon. When you try to click "save info", it doesn't work. But just know that that was the intended fucntionality - the user can log in, enter info, and others could see it. Obviously, too, I would have had an admin account that could manage the data people entered. 
+
+## Auth0 Notes
+I was not able to check whether the way postgreSQL is set up actually works. This is because Auth0 was honestly a nightmare. I don't know if either my home-wifi or laptop was acting up (probably the ladder, my laptop has been having major issues), but it takes forever for it to log me in. It DOES let me log in eventually. I was not able to get to the button of why it eventually works, but I usually clicked the button twice and waited like 5 minutes. Then it eventually worked.
+
+So, with that said, the log in button on the website SHOULD redirect you to the Auth0 website. This will have you make an account. After you log in intially and get redirected to the Auth0 page, it will no longer do that redirect you on subsequences runs of the app. It SHOULD just log you in automatically after a few minutes as long as you did the intitial sign in on the website. 
